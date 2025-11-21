@@ -1,5 +1,14 @@
 PRAGMA foreign_keys=ON;
 
+create table Person (
+    personID INT, 
+    name VARCHAR(50), 
+    birthdate DATE, 
+    TAXnumber NUMERIC(9,0), 
+    address VARCHAR(50), 
+    zipcode NUMERIC(7,0)
+);
+
 CREATE TABLE Consume(
     consumeID NUMERIC(8,0) PRIMARY KEY,
     price NUMBER NOT NULL
