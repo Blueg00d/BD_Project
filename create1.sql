@@ -1,12 +1,25 @@
 PRAGMA foreign_keys=ON;
 
-create table Person (
-    personID INT, 
-    name VARCHAR(50), 
-    birthdate DATE, 
-    TAXnumber NUMERIC(9,0), 
-    address VARCHAR(50), 
-    zipcode NUMERIC(7,0)
+DROP TABLE IF EXISTS Person;
+DROP TABLE IF EXISTS Consume;
+DROP TABLE IF EXISTS Food;
+DROP TABLE IF EXISTS Drink;
+DROP TABLE IF EXISTS Menu;
+DROP TABLE IF EXISTS Room;
+DROP TABLE IF EXISTS Reservation;
+DROP TABLE IF EXISTS Ticket;
+DROP TABLE IF EXISTS Payment;
+DROP TABLE IF EXISTS Bill;
+DROP TABLE IF EXISTS VIPSubscription;
+
+
+CREATE TABLE Person (
+    personID NUMERIC(8,0) PRIMARY KEY, 
+    name VARCHAR(50) NOT NULL, 
+    birthdate DATE NOT NULL, 
+    TAXnumber NUMERIC(9,0) NOT NULL, 
+    address VARCHAR(50) NOT NULL, 
+    zipcode NUMERIC(7,0) NOT NULL
 );
 
 CREATE TABLE Consume(
