@@ -20,6 +20,17 @@ DROP TABLE IF EXISTS Ticket;
 DROP TABLE IF EXISTS Payment;
 DROP TABLE IF EXISTS Bill;
 DROP TABLE IF EXISTS VIPSubscription;
+DROP TABLE IF EXISTS CVInfo;
+DROP TABLE IF EXISTS ThemeInfo;
+DROP TABLE IF EXISTS Salary;
+DROP TABLE IF EXISTS WorkSchedule;
+DROP TABLE IF EXISTS ConsumeQ;
+DROP TABLE IF EXISTS ReservationSchedule;
+DROP TABLE IF EXISTS RoomSchedule;
+DROP TABLE IF EXISTS AgeRestriction;
+DROP TABLE IF EXISTS RoomSecurity;
+DROP TABLE IF EXISTS RoomCleaner;
+DROP TABLE IF EXISTS ActorPlay;
 
 
 -- nao percebo muito bem quando por not null / sara D:
@@ -43,19 +54,24 @@ create table Customer (
 create table Actor (
     personID NUMERIC(8,0), 
     actorID NUMERIC(8,0),
-    trophynumber NUMERIC(2,0) NOT NULL, 
     CV TEXT NOT NULL,
-
 
     PRIMARY KEY(personID, actorID),
     FOREIGN KEY (personID) REFERENCES Person(personID),
+    FOREIGN KEY (CV) REFERENCES CVInfo(CV)
+    
+);
+CREATE TABLE CVInfo(
+    CV TEXT PRIMARY KEY,
+    trophyNumber NUMERIC(3, 0) NOT NULL,
+
     CONSTRAINT trophyNonNegative CHECK (trophynumber >= 0)
 );
 
 create table Employee (
     personID NUMERIC(8,0),
     employeeID NUMERIC(8,0),
-    CV TEXT NOT NULL,
+    employeeCV TEXT NOT NULL,
 
     PRIMARY KEY(personID, employeeID),
     FOREIGN KEY (personID) REFERENCES Person(personID)
@@ -185,9 +201,14 @@ CREATE TABLE Reservation(
     reservationID NUMERIC(8,0) PRIMARY KEY,
     billID NUMERIC(8,0) NOT NULL,
     theme TEXT NOT NULL,
-    pricePerHour NUMBER NOT NULL,
-
+    
     FOREIGN KEY (billID) REFERENCES Bill(billID),
+    FOREIGN KEY (theme) REFERENCES ThemeInfo(theme)
+);
+CREATE TABLE ThemeInfo(
+    theme TEXT PRIMARY KEY,
+    pricePerHour NUMERIC (2,0) NOT NULL,
+
     CONSTRAINT pricePerHour_nonNegative CHECK (pricePerHour >= 0)
 );
 
@@ -229,6 +250,84 @@ CREATE TABLE Payment(
     method TEXT NOT NULL,
     totalAmount NUMBER NOT NULL
 );
+CREATE TABLE Salary(
+    salaryID NUMERIC(8,0) PRIMARY KEY,
+    employeeID NUMERIC(8,0) NOT NULL,
+    ammount NUMERIC (6, 2) NOT NULL,
+
+    FOREIGN KEY (employeeID) REFERENCES Employee(employeeID),
+    CONSTRAINT fair_salary CHECK (ammount>=870)
+);
+CREATE TABLE WorkSchedule(
+    workScheduleID NUMERIC(8, 0) PRIMARY KEY,
+    employeeID NUMERIC (8,0) NOT NULL,
+    startShift TIME NOT NULL, --!!!
+    endShift TIME NULL,       --!!!
+    date DATE NOT NULL,
+
+    FOREIGN KEY (employeeID) REFERENCES Employee(employeeID)
+);
+CREATE TABLE ConsumeQ(
+    consumeID NUMERIC(8,0) PRIMARY KEY,
+    quantity NUMERIC(2, 0) NOT NULL,
+
+    FOREIGN KEY (consumeID) REFERENCES Consume(consumeID),
+    CONSTRAINT correct_quantity CHECK (quantity>=0)
+);
+CREATE TABLE ReservationSchedule(
+    roomID NUMERIC(8,0) PRIMARY KEY,
+    startHour TIME NOT NULL, --!!!
+    endHour TIME NOT NULL,  --!!!
+    date DATE NOT NULL,
+    reservationID NUMERIC(8,0) NOT NULL,
+
+    FOREIGN KEY (roomID) REFERENCES Room(roomID),
+    FOREIGN KEY (reservationID) REFERENCES Reservation(reservationID)
+);
+CREATE TABLE RoomSchedule(
+    roomID NUMERIC(8,0),
+    exhibitionID NUMERIC(8,0),
+    startHour TIME NOT NULL,    ---!!!
+    endHour TIME NOT NULL,      --!!!
+    date DATE NOT NULL,
+
+    PRIMARY KEY(roomID, exhibitionID),
+    FOREIGN KEY (roomID) REFERENCES Room(roomID),
+    FOREIGN KEY (exhibitionID) REFERENCES Exhibition(exhibitionID)
+);
+CREATE TABLE AgeRestriction(
+    exhibitionID NUMERIC(8,0) PRIMARY KEY,
+    canWatch BOOLEAN NOT NULL,
+    customerID NUMERIC (8,0) NOT NULL,
+
+    FOREIGN KEY (exhibitionID) REFERENCES Exhibition(exhibitionID),
+    FOREIGN KEY (customerID) REFERENCES Customer(customerID)
+);
+CREATE TABLE RoomSecurity(
+    roomID NUMERIC (8,0),
+    employeeID NUMERIC (8,0),
+
+    PRIMARY KEY (roomID, employeeID),
+    FOREIGN KEY (roomID) REFERENCES Room(roomID),
+    FOREIGN KEY (employeeID) REFERENCES Security(employeeID)
+);
+CREATE TABLE RoomCleaner(
+    roomID NUMERIC (8,0),
+    employeeID NUMERIC (8,0),
+
+    PRIMARY KEY (roomID, employeeID),
+    FOREIGN KEY (roomID) REFERENCES Room(roomID),
+    FOREIGN KEY (employeeID) REFERENCES Cleaner(employeeID)
+);
+CREATE TABLE ActorPlay(
+    actorID NUMERIC (8,0),
+    exhibitionID NUMERIC (8,0),
+
+    PRIMARY KEY (actorID, exhibitionID),
+    FOREIGN KEY (actorID) REFERENCES Actor(actorID),
+    FOREIGN KEY (exhibitionID) REFERENCES Exhibition(exhibitionID)
+);
+
 
 
 
