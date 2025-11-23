@@ -176,11 +176,11 @@ CREATE TABLE Menu(
 );
 
 CREATE TABLE Room(
-    roomID NUMERIC(8,0) PRIMARY KEY,
+    roomID NUMERIC(1,0) PRIMARY KEY,
     numberSeats NUMBER NOT NULL,
     is_3D BOOLEAN NOT NULL,
 
-    CONSTRAINT number_of_rooms CHECK (roomID BETWEEN 1 AND 10),
+    CONSTRAINT number_of_rooms CHECK (roomID BETWEEN 0 AND 9),
     CONSTRAINT number_of_seats CHECK (numberSeats BETWEEN 1 AND 463)
 );
 CREATE TABLE Bill(

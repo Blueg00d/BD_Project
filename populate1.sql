@@ -30,8 +30,8 @@ INSERT INTO WorkSchedule VALUES (76453544, 55645637, '09:00:00', '22:00:00', '20
 INSERT INTO Exhibition VALUES (23983454, 'Top Gun: Maverick', 2022, 131, 'Aviões', 14);
 INSERT INTO Movie VALUES (23983454, 4.1, 'Paramount Pictures');
 
-INSERT INTO Exhibition VALUES (81000013, 'Hamilton', 2015, 165, 'Musical', 10);
-INSERT INTO Play VALUES (81000013, 'Hamilton Broadway Company', 2, 'Hamilton production, featuring a rotating stage and period-inspired costumes.');
+INSERT INTO Exhibition VALUES (46743229, 'Hamilton', 2015, 165, 'Musical', 10);
+INSERT INTO Play VALUES (46743229, 'Hamilton Broadway Company', 2, 'Hamilton production, featuring a rotating stage and period-inspired costumes.');
 
 INSERT INTO Consume VALUES (12312871, 12.99);
 INSERT INTO Food VALUES (12312871, 'small', 'nachos');
