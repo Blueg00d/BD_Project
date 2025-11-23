@@ -2,7 +2,6 @@ PRAGMA foreign_keys=ON;
 
 DROP TABLE IF EXISTS Employee;
 DROP TABLE IF EXISTS Cashier;
-DROP TABLE IF EXISTS Play;
 DROP TABLE IF EXISTS Movie;
 DROP TABLE IF EXISTS Food;
 DROP TABLE IF EXISTS Drink;
@@ -31,6 +30,7 @@ DROP TABLE IF EXISTS Security;
 DROP TABLE IF EXISTS Exhibition;
 DROP TABLE IF EXISTS Room;
 DROP TABLE IF EXISTS Person;
+DROP TABLE IF EXISTS Play;
 
 
 CREATE TABLE Person (
@@ -120,7 +120,7 @@ create table Play (
     exhibitionID NUMERIC(8,0) PRIMARY KEY,
     theatreCompany VARCHAR(30) NOT NULL,
     numberActs NUMERIC(1,0) NOT NULL,
-    scenery VARCHAR(200) NOT NULL, 
+    scenery TEXT NOT NULL, 
 
     FOREIGN KEY (exhibitionID) REFERENCES Exhibition(exhibitionID)
         ON UPDATE CASCADE
@@ -176,11 +176,11 @@ CREATE TABLE Menu(
 );
 
 CREATE TABLE Room(
-    roomID NUMERIC(8,0) PRIMARY KEY,
+    roomID NUMERIC(1,0) PRIMARY KEY,
     numberSeats NUMBER NOT NULL,
     is_3D BOOLEAN NOT NULL,
 
-    CONSTRAINT number_of_rooms CHECK (roomID BETWEEN 1 AND 10),
+    CONSTRAINT number_of_rooms CHECK (roomID BETWEEN 0 AND 9),
     CONSTRAINT number_of_seats CHECK (numberSeats BETWEEN 1 AND 463)
 );
 CREATE TABLE Bill(
