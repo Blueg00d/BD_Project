@@ -33,7 +33,6 @@ DROP TABLE IF EXISTS Room;
 DROP TABLE IF EXISTS Person;
 
 
--- nao percebo muito bem quando por not null / sara D:
 CREATE TABLE Person (
     personID NUMERIC(8,0) PRIMARY KEY, 
     name VARCHAR(50) NOT NULL, 
@@ -262,7 +261,6 @@ CREATE TABLE VIPSubscription(
     CONSTRAINT correct_percentage CHECK (discountPercent BETWEEN 0 AND 1)
 );
 CREATE TABLE Payment(
-    -- TODO
     paymentID NUMERIC(8,0) PRIMARY KEY,
     method TEXT NOT NULL,
     totalAmount NUMBERIC(6,2) NOT NULL,
@@ -310,8 +308,8 @@ CREATE TABLE ConsumeQ(
 );
 CREATE TABLE ReservationSchedule(
     roomID NUMERIC(8,0) PRIMARY KEY,
-    startHour TIME NOT NULL, --!!!
-    endHour TIME NOT NULL,  --!!!
+    startHour TIME NOT NULL, 
+    endHour TIME NOT NULL,  
     date DATE NOT NULL,
     reservationID NUMERIC(8,0) NOT NULL,
 
@@ -325,11 +323,10 @@ CREATE TABLE ReservationSchedule(
     CONSTRAINT valid_endHour CHECK (TIME(endHour) IS NOT NULL)
 );
 CREATE TABLE RoomSchedule(
-    --TODO
     roomID NUMERIC(8,0),
     exhibitionID NUMERIC(8,0),
-    startHour TIME NOT NULL,    ---!!!
-    endHour TIME NOT NULL,      --!!!
+    startHour TIME NOT NULL,   
+    endHour TIME NOT NULL,     
     date DATE NOT NULL,
 
     PRIMARY KEY(roomID, date, startHour),
